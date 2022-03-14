@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+*.jfm
+.vs/
+x64/
