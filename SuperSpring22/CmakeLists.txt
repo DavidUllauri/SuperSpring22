@@ -1,0 +1,5 @@
+add_executable(SuperSpring22 main.cpp)
+
+include_directories(../TDE)
+
+target_link_libraries(SuperSpring22 TDE)
