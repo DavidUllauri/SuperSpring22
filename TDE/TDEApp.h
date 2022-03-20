@@ -9,5 +9,8 @@ namespace TDE
 	public:
 		void Run();
 		virtual void OnUpdate();
+	
+	private:
+
 	};
 }
