@@ -1,10 +1,11 @@
 #pragma once
 
 #include "WindowImplementation.h"
+#include "TDEUtil.h"
 
 namespace TDE
 {
-	class GameWindow
+	class TDE_API GameWindow
 	{
 	public:
 		static void Init();

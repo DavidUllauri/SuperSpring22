@@ -1,6 +1,26 @@
-add_library(TDE SHARED TDE.h TDE TDEUtil.h TDEApp.cpp)
+set(HEADER_FILES
+	TDE.h
+	TDEApp.h
+	TDEUtil.h
+	GameWindow.h
+	WindowImplementation.h
+	specificGLFW/GlfwWindow.h
+	)
+
+set(SOURCE_FILES
+	TDEApp.cpp
+	GameWindow.cpp
+	specificGLFW/GlfwWindow.cpp
+	)
+
+add_library(TDE SHARED ${HEADER_FILES} ${SOURCE_FILES})
 
 add_definitions(-DTDE_LIB)
 add_definitions(-DTDE_DEBUG)
 
+include_directories(../glfw/include)
+include_directories(../TDE)
+
 target_precompile_headers(TDE PRIVATE pch.h)
+
+target_link_libraries(TDE glfw)
