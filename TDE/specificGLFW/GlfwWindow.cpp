@@ -1,7 +1,7 @@
 #include "pch.h"
 
 #include "GlfwWindow.h"
-#include "TDEUtil.h"
+#include "Core.h"
 
 namespace TDE
 {

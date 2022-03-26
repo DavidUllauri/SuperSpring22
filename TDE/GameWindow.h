@@ -1,7 +1,7 @@
 #pragma once
 
-#include "WindowImplementation.h"
-#include "TDEUtil.h"
+#include "WindowInterface.h"
+#include "Core.h"
 
 namespace TDE
 {
@@ -22,6 +22,6 @@ namespace TDE
 
 		GameWindow();
 
-		WindowImplementation* mWindow{ nullptr };
+		WindowInterface* mWindow{ nullptr };
 	};
 }

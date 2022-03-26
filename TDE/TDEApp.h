@@ -1,6 +1,6 @@
 #pragma once
 
-#include "TDEUtil.h"
+#include "Core.h"
 
 namespace TDE 
 {

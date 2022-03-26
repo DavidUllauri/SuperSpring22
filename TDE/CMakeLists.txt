@@ -1,9 +1,9 @@
 set(HEADER_FILES
 	TDE.h
 	TDEApp.h
-	TDEUtil.h
+	Core.h
 	GameWindow.h
-	WindowImplementation.h
+	WindowInterface.h
 	specificGLFW/GlfwWindow.h
 	)
 

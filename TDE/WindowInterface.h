@@ -3,7 +3,7 @@
 
 namespace TDE
 {
-	class WindowImplementation
+	class WindowInterface
 	{
 	public:
 		virtual bool CreateWindow(int width, int height, const std::string& windowName) = 0;

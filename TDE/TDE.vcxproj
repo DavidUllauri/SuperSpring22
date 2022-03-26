@@ -158,8 +158,8 @@
     <ClInclude Include="specificGLFW\GlfwWindow.h" />
     <ClInclude Include="TDE.h" />
     <ClInclude Include="TDEApp.h" />
-    <ClInclude Include="TDEUtil.h" />
-    <ClInclude Include="WindowImplementation.h" />
+    <ClInclude Include="Core.h" />
+    <ClInclude Include="WindowInterface.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameWindow.cpp" />

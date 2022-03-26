@@ -1,11 +1,11 @@
 #pragma once
 
-#include "WindowImplementation.h"
+#include "WindowInterface.h"
 #include <GLFW/glfw3.h>
 
 namespace TDE
 {
-	class GlfwWindow : public WindowImplementation
+	class GlfwWindow : public WindowInterface
 	{
 	public:
 		GlfwWindow();
