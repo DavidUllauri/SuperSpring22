@@ -5,18 +5,18 @@
 
 namespace TDE
 {
-	class GlfwWindow : public WindowInterface
+	class WinWindow : public WindowInterface
 	{
 	public:
-		GlfwWindow();
+		WinWindow();
 		virtual bool CreateWindow(int width, int height, const std::string& windowName) override;
 		virtual void SwapBuffers() override;
 		virtual void PollEvents() override;
 		virtual int GetWidth() const override;
 		virtual int GetHeight() const override;
-		~GlfwWindow();
+		~WinWindow();
 
 	private:
-		GLFWwindow* m_Window{ nullptr };
+		GLFWwindow* m_window{ nullptr };
 	};
 }

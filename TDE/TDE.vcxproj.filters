@@ -33,7 +33,7 @@
     <ClInclude Include="WindowInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="opengl\GlfwWindow.h">
+    <ClInclude Include="opengl\WinWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EntryPoint.h">
@@ -50,7 +50,7 @@
     <ClCompile Include="GameWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="opengl\GlfwWindow.cpp">
+    <ClCompile Include="opengl\WinWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -5,12 +5,12 @@ set(HEADER_FILES
 	TDE.h
 	TDEApp.h
 	WindowInterface.h
-	specificGLFW/GlfwWindow.h
+	opengl/WinWindow.h
 	)
 
 set(SOURCE_FILES
 	GameWindow.cpp
-	specificGLFW/GlfwWindow.cpp
+	opengl/WinWindow.cpp
 	TDEApp.cpp
 	)
 
