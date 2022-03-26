@@ -21,7 +21,7 @@
     <ClInclude Include="TDEApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TDEUtil.h">
+    <ClInclude Include="Core.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
@@ -30,10 +30,13 @@
     <ClInclude Include="GameWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WindowImplementation.h">
+    <ClInclude Include="WindowInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="specificGLFW\GlfwWindow.h">
+    <ClInclude Include="opengl\WinWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntryPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -47,7 +50,7 @@
     <ClCompile Include="GameWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="specificGLFW\GlfwWindow.cpp">
+    <ClCompile Include="opengl\WinWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

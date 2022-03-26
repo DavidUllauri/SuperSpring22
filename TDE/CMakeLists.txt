@@ -1,16 +1,17 @@
 set(HEADER_FILES
+	Core.h
+	EntryPoint.h
+	GameWindow.h
 	TDE.h
 	TDEApp.h
-	TDEUtil.h
-	GameWindow.h
-	WindowImplementation.h
-	specificGLFW/GlfwWindow.h
+	WindowInterface.h
+	opengl/WinWindow.h
 	)
 
 set(SOURCE_FILES
-	TDEApp.cpp
 	GameWindow.cpp
-	specificGLFW/GlfwWindow.cpp
+	opengl/WinWindow.cpp
+	TDEApp.cpp
 	)
 
 add_library(TDE SHARED ${HEADER_FILES} ${SOURCE_FILES})

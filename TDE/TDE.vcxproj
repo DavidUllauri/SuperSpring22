@@ -153,13 +153,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="EntryPoint.h" />
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="specificGLFW\GlfwWindow.h" />
+    <ClInclude Include="opengl\WinWindow.h" />
     <ClInclude Include="TDE.h" />
     <ClInclude Include="TDEApp.h" />
-    <ClInclude Include="TDEUtil.h" />
-    <ClInclude Include="WindowImplementation.h" />
+    <ClInclude Include="Core.h" />
+    <ClInclude Include="WindowInterface.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameWindow.cpp" />
@@ -169,7 +170,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="specificGLFW\GlfwWindow.cpp" />
+    <ClCompile Include="opengl\WinWindow.cpp" />
     <ClCompile Include="TDEApp.cpp" />
   </ItemGroup>
   <ItemGroup>

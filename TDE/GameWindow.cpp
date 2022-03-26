@@ -1,17 +1,17 @@
 #include "pch.h"
 #include "GameWindow.h"
-#include "specificGLFW/GlfwWindow.h"
+#include "opengl/WinWindow.h"
 
 namespace TDE
 {
 	GameWindow::GameWindow()
 	{
 #ifdef TDE_WINDOWS
-		mWindow = new GlfwWindow;
+		mWindow = new WinWindow;
 #elif defined TDE_MACOS
-		mWindow = new GlfwWindow;
+		mWindow = new WinWindow;
 #elif defined TDE_LINUX
-		mWindow = new GlfwWindow;
+		mWindow = new WinWindow;
 #else
 	#Unsupported_plateform
 #endif // TDE_WINDOWS
