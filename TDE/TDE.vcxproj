@@ -153,9 +153,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="EntryPoint.h" />
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="specificGLFW\GlfwWindow.h" />
+    <ClInclude Include="opengl\GlfwWindow.h" />
     <ClInclude Include="TDE.h" />
     <ClInclude Include="TDEApp.h" />
     <ClInclude Include="Core.h" />
@@ -169,7 +170,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="specificGLFW\GlfwWindow.cpp" />
+    <ClCompile Include="opengl\GlfwWindow.cpp" />
     <ClCompile Include="TDEApp.cpp" />
   </ItemGroup>
   <ItemGroup>

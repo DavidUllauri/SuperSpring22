@@ -13,21 +13,21 @@ namespace TDE
 
 	bool GlfwWindow::CreateWindow(int width, int height, const std::string& windowName)
 	{
-		mGlfwWindow = glfwCreateWindow(width, height, windowName.c_str(), NULL, NULL);
+		m_Window = glfwCreateWindow(width, height, windowName.c_str(), NULL, NULL);
 
-		if (!mGlfwWindow) {
+		if (!m_Window) {
 			TDE_LOG("ERROR: window creation failed!");
 			return false;
 		}
 		else {
-			glfwMakeContextCurrent(mGlfwWindow);
+			glfwMakeContextCurrent(m_Window);
 			return true;
 		}
 	}
 
 	void GlfwWindow::SwapBuffers()
 	{
-		glfwSwapBuffers(mGlfwWindow);
+		glfwSwapBuffers(m_Window);
 	}
 
 	void GlfwWindow::PollEvents()
@@ -38,7 +38,7 @@ namespace TDE
 	int GlfwWindow::GetWidth() const
 	{
 		int width, height;
-		glfwGetWindowSize(mGlfwWindow, &width, &height);
+		glfwGetWindowSize(m_Window, &width, &height);
 
 		return width;
 	}
@@ -46,15 +46,15 @@ namespace TDE
 	int GlfwWindow::GetHeight() const
 	{
 		int width, height;
-		glfwGetWindowSize(mGlfwWindow, &width, &height);
+		glfwGetWindowSize(m_Window, &width, &height);
 
 		return height;
 	}
 
 	GlfwWindow::~GlfwWindow()
 	{
-		if(mGlfwWindow != nullptr)
-			glfwDestroyWindow(mGlfwWindow);
+		if(m_Window != nullptr)
+			glfwDestroyWindow(m_Window);
 
 		glfwTerminate();
 	}

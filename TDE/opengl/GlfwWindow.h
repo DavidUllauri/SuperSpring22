@@ -17,6 +17,6 @@ namespace TDE
 		~GlfwWindow();
 
 	private:
-		GLFWwindow* mGlfwWindow{ nullptr };
+		GLFWwindow* m_Window{ nullptr };
 	};
 }
