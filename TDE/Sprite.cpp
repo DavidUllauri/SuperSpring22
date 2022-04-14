@@ -6,7 +6,12 @@ namespace TDE
 {
 	Sprite::Sprite(const std::string& file)
 	{
+#ifdef TDE_OPENGL
 		mImplementation = new OpenGLSprite(file);
+#else
+		#Only_OpenGL_is_supported
+#endif // TDE OPENGL
+
 	}
 
 	int Sprite::GetWidth() const
@@ -19,4 +24,8 @@ namespace TDE
 		return mImplementation->GetHeight();
 	}
 
+	void Sprite::Bind()
+	{
+		mImplementation->Bind();
+	}
 }

@@ -1,10 +1,11 @@
 #pragma once
 
-#include "SpriteImplementation.h"
+#include "SpriteInterface.h"
+#include "Core.h"
 
 namespace TDE
 {
-	class Sprite
+	class TDE_API Sprite
 	{
 	public:
 		Sprite(const std::string& file);
@@ -15,6 +16,6 @@ namespace TDE
 		void Bind();
 
 	private:
-		SpriteImplementation* mImplementation;
+		SpriteInterface* mImplementation;
 	};
 }
