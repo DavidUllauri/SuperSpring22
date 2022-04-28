@@ -5,7 +5,7 @@ layout (location = 1) in vec2 tCoordInput;
 out vec2 TexturePoints;
 
 uniform ivec3 spriteCoord;
-uniform ivec3 windowSize;
+uniform ivec2 windowSize;
 
 void main()
 {
