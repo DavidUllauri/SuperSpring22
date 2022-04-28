@@ -9,17 +9,7 @@ namespace TDE
 		vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
 		// FILE READING //
-		std::string sourceCode;
-		std::ifstream vertexInput{ vertexFile };
-
-		while (vertexInput)
-		{
-			std::string line;
-			std::getline(vertexInput, line);
-			sourceCode += line;
-		}
-
-		vertexInput.close();
+		std::string sourceCode = ReadFile(vertexFile);
 
 		const char* cSource = sourceCode.c_str();
 
@@ -40,21 +30,12 @@ namespace TDE
 
 		// FILE READING //
 		sourceCode.clear();
-		std::ifstream fragmentInput{ fragmentFile };
-
-		while (fragmentInput)
-		{
-			std::string line;
-			std::getline(fragmentInput, line);
-			sourceCode += line;
-		}
-
-		fragmentInput.close();
+		sourceCode = ReadFile(fragmentFile);
 
 		const char* fragSource = sourceCode.c_str();
 		glShaderSource(fragmentShader, 1, &fragSource, NULL);
 		glCompileShader(fragmentShader);
-		
+
 		// check for shader compile errors
 		glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
 		if (!success)
@@ -68,6 +49,7 @@ namespace TDE
 		glAttachShader(mShaderProgram, fragmentShader);
 		glLinkProgram(mShaderProgram);
 		// check for linking errors
+		glValidateProgram(mShaderProgram);
 		glGetProgramiv(mShaderProgram, GL_LINK_STATUS, &success);
 		if (!success)
 		{
@@ -76,6 +58,33 @@ namespace TDE
 		}
 		glDeleteShader(vertexShader);
 		glDeleteShader(fragmentShader);
+	}
+
+	std::string OpenGLShader::ReadFile(const std::string& shaderfile)
+	{
+		std::string sourceCode;
+		std::ifstream ifs(shaderfile, std::ios::in | std::ios::binary);
+
+		if (!ifs)
+		{
+			std::cout << "Could not open file '{0}'" << shaderfile << std::endl;
+			return sourceCode;
+		}
+
+		ifs.seekg(0, std::ios::end);
+		size_t size = ifs.tellg();
+
+		if (size == -1)
+		{
+			std::cout << "Could not read from file '{0}'" << shaderfile << std::endl;
+			return sourceCode;
+		}
+
+		sourceCode.resize(size);
+		ifs.seekg(0, std::ios::beg);
+		ifs.read(&sourceCode[0], size);
+
+		return sourceCode;
 	}
 
 	void OpenGLShader::UploadUniformInt3(const std::string& name, int xval, int yval, int zval)

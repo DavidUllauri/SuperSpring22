@@ -14,6 +14,8 @@ namespace TDE
 
 		private:
 			unsigned int mShaderProgram;
+
+			std::string ReadFile(const std::string& filepath);
 	};
 }
 
