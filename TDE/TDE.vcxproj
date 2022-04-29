@@ -155,8 +155,11 @@
   <ItemGroup>
     <ClInclude Include="EntryPoint.h" />
     <ClInclude Include="GameWindow.h" />
+    <ClInclude Include="opengl\OpenGLRenderer.h" />
     <ClInclude Include="opengl\OpenGLShader.h" />
     <ClInclude Include="opengl\OpenGLSprite.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="RendererInterface.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderInterface.h" />
     <ClInclude Include="SpriteInterface.h" />
@@ -170,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameWindow.cpp" />
+    <ClCompile Include="opengl\OpenGLRenderer.cpp" />
     <ClCompile Include="opengl\OpenGLShader.cpp" />
     <ClCompile Include="opengl\OpenGLSprite.cpp" />
     <ClCompile Include="pch.cpp">
@@ -179,6 +183,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="opengl\WinWindow.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TDEApp.cpp" />

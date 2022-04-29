@@ -6,6 +6,7 @@
 #include "glad/glad.h"
 #include "Sprite.h"
 #include "Shader.h"
+#include "Renderer.h"
 
 namespace TDE
 {
@@ -18,10 +19,7 @@ namespace TDE
 		TDE::GameWindow::GetWindow()->CreateWindow(800, 600, "game window");
 
 		
-
-		TDE::Shader shader{ "../TDE/assets/shaders/VertexShaderDefault.glsl", "../TDE/assets/shaders/FragShaderDefault.glsl" };
-		shader.UploadUniformInt2("windowSize", 800, 600);
-		shader.UploadUniformInt3("spriteCoord", 100, 200, 1.0);
+		Renderer::Init();
 
 		//TDE::Sprite star{ "../TDE/assets/container.jpg" };
 		TDE::Sprite star{"../TDE/assets/img/Star.png"};
@@ -33,9 +31,8 @@ namespace TDE
 			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			shader.Bind();
+			Renderer::Draw(star, 50, 20, 1);
 
-			star.Bind();
 
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
