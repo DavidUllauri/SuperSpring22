@@ -32,7 +32,7 @@ namespace TDE
 
 	bool GameWindow::CreateWindow(int width, int height, const std::string& windowName)
 	{
-		return mWindow->CreateWindow(800, 600, "Super Spring 2022");
+		return mWindow->CreateWindow(width, height, windowName);
 	}
 
 	void GameWindow::SwapBuffers()

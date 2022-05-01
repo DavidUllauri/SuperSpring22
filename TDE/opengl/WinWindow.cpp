@@ -21,6 +21,10 @@ namespace TDE
 		}
 
 		glfwMakeContextCurrent(m_window);
+
+		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+			TDE_LOG("ERROR: Failed to initialize GLAD");
+
 		return true;
 	}
 
