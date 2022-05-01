@@ -16,11 +16,15 @@ namespace TDE
 
 		TDE::GameWindow::GetWindow()->CreateWindow(800, 600, "game window");
 
-		
+
 		Renderer::Init();
 
 		//TDE::Sprite star{ "../TDE/assets/container.jpg" };
-		TDE::Sprite star{"../TDE/assets/img/Star.png"};
+		TDE::Sprite star{ "../TDE/assets/img/Star.png" };
+
+		int xPos{ -star.GetWidth() };
+
+		mNextFrameTime = std::chrono::steady_clock::now() + mFrameDuration;
 
 		while (true)
 		{
@@ -28,11 +32,16 @@ namespace TDE
 
 			Renderer::ClearScreen();
 
-			Renderer::Draw(star, 50, 20, 1);
+			Renderer::Draw(star, xPos, 20, 1);
 
+			xPos = (xPos + 5);
+
+			std::this_thread::sleep_until(mNextFrameTime);
 			
 			TDE::GameWindow::GetWindow()->SwapBuffers();
 			TDE::GameWindow::GetWindow()->PollEvents();
+
+			mNextFrameTime += mFrameDuration;
 		}
 	}
 	void TDEApp::OnUpdate()
