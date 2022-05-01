@@ -18,6 +18,11 @@ namespace TDE
 		mInstance->mRenderer->Draw(image, xPos, yPos, zPos, mInstance->mShader);
 	}
 
+	void Renderer::ClearScreen()
+	{
+		mInstance->mRenderer->ClearScreen();
+	}
+
 	Renderer::Renderer():
 		mShader("../TDE/assets/shaders/VertexShaderDefault.glsl", "../TDE/assets/shaders/FragShaderDefault.glsl")
 	{

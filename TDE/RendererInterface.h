@@ -9,5 +9,6 @@ namespace TDE
 	{
 	public:
 		virtual void Draw(Sprite& image, int xPos, int yPos, int zPos, Shader) = 0;
+		virtual void ClearScreen() = 0;
 	};
 }
