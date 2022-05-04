@@ -154,6 +154,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="EntryPoint.h" />
+    <ClInclude Include="Events.h" />
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="opengl\OpenGLRenderer.h" />
     <ClInclude Include="opengl\OpenGLShader.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="WindowInterface.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Events.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="opengl\OpenGLRenderer.cpp" />
     <ClCompile Include="opengl\OpenGLShader.cpp" />

@@ -2,6 +2,7 @@
 
 #include "WindowInterface.h"
 #include "Core.h"
+#include "Events.h"
 
 namespace TDE
 {
@@ -16,6 +17,8 @@ namespace TDE
 		void PollEvents();	// Prof calls it CollectEvents()
 		int GetWidth() const;
 		int GetHeight() const;
+		
+		void SetKeyPressedCallback(const std::function<void(const KeyPressedEvent&)> keyPressedCallback);
 
 	private:
 		inline static GameWindow* mInstance{ nullptr };

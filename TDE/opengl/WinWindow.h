@@ -3,6 +3,7 @@
 #include "WindowInterface.h"
 #include "glad/glad.h"
 #include <GLFW/glfw3.h>
+#include "Events.h"
 
 namespace TDE
 {
@@ -15,9 +16,14 @@ namespace TDE
 		virtual void PollEvents() override;
 		virtual int GetWidth() const override;
 		virtual int GetHeight() const override;
+		virtual void SetKeyPressedCallback(const std::function<void(const KeyPressedEvent&)> keyPressedCallback) override;
 		~WinWindow();
 
 	private:
+		struct Callbacks {
+			std::function<void(const KeyPressedEvent&)> keyPressedCallback;
+		} mCallbacks;
+
 		GLFWwindow* m_window{ nullptr };
 	};
 }

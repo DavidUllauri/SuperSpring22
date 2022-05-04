@@ -11,5 +11,6 @@ namespace TDE
 		virtual void PollEvents() = 0;
 		virtual int GetWidth() const = 0;
 		virtual int GetHeight() const = 0;
+		virtual void SetKeyPressedCallback(const std::function<void(const KeyPressedEvent&)> keyPressedCallback) = 0;
 	};
 }

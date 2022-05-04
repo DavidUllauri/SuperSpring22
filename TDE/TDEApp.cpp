@@ -47,4 +47,9 @@ namespace TDE
 	void TDEApp::OnUpdate()
 	{
 	}
+	
+	void TDEApp::SetKeyPressedCallback(const std::function<void(const KeyPressedEvent&)>& keyPressedCallback)
+	{
+		GameWindow::GetWindow()->SetKeyPressedCallback(keyPressedCallback);
+	}
 }

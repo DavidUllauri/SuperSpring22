@@ -26,6 +26,7 @@ namespace TDE
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 			TDE_LOG("ERROR: Failed to initialize GLAD");
 
+		glfwSetWindowUserPointer(m_window, &mCallbacks);
 		return true;
 	}
 
@@ -61,6 +62,18 @@ namespace TDE
 			glfwDestroyWindow(m_window);
 
 		glfwTerminate();
+	}
+
+	void WinWindow::SetKeyPressedCallback(const std::function<void(const KeyPressedEvent&)> keyPressedCallback)
+	{
+		glfwSetKeyCallback(m_window, [](GLFWwindow* window, int key, int scancode, int action, int mods) 
+			{
+				if (action == GLFW_PRESS || action == GLFW_REPEAT) {
+					Callbacks* userPointer{ (Callbacks*)glfwGetWindowUserPointer(window) };
+
+				}	
+			}
+		);
 	}
 
 }

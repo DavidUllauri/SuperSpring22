@@ -55,4 +55,9 @@ namespace TDE
 		return mWindow->GetHeight();
 	}
 
+	void GameWindow::SetKeyPressedCallback(const std::function<void(const KeyPressedEvent&)> keyPressedCallback)
+	{
+		mWindow->SetKeyPressedCallback(keyPressedCallback);
+	}
+
 }
