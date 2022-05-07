@@ -156,6 +156,7 @@
     <ClInclude Include="EntryPoint.h" />
     <ClInclude Include="Events.h" />
     <ClInclude Include="GameWindow.h" />
+    <ClInclude Include="KeyCodes.h" />
     <ClInclude Include="opengl\OpenGLRenderer.h" />
     <ClInclude Include="opengl\OpenGLShader.h" />
     <ClInclude Include="opengl\OpenGLSprite.h" />

@@ -17,11 +17,13 @@ namespace TDE
 		virtual int GetWidth() const override;
 		virtual int GetHeight() const override;
 		virtual void SetKeyPressedCallback(const std::function<void(const KeyPressedEvent&)> keyPressedCallback) override;
+		virtual void SetKeyReleasedCallback(const std::function<void(const KeyReleasedEvent&)> keyReleasedCallback) override;
 		~WinWindow();
 
 	private:
 		struct Callbacks {
-			std::function<void(const KeyPressedEvent&)> keyPressedCallback;
+			std::function<void(const KeyPressedEvent&)> keyPressedCallback{ [](const KeyPressedEvent&) {} };
+			std::function<void(const KeyReleasedEvent&)> keyReleasedCallback{ [](const KeyReleasedEvent&) {} };
 		} mCallbacks;
 
 		GLFWwindow* m_window{ nullptr };

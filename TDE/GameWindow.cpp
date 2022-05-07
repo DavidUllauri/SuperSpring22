@@ -60,4 +60,9 @@ namespace TDE
 		mWindow->SetKeyPressedCallback(keyPressedCallback);
 	}
 
+	void GameWindow::SetKeyReleasedCallback(const std::function<void(const KeyReleasedEvent&)> keyReleasedCallback)
+	{
+		mWindow->SetKeyReleasedCallback(keyReleasedCallback);
+	}
+
 }

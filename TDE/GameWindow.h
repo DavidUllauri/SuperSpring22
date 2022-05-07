@@ -19,6 +19,7 @@ namespace TDE
 		int GetHeight() const;
 		
 		void SetKeyPressedCallback(const std::function<void(const KeyPressedEvent&)> keyPressedCallback);
+		void SetKeyReleasedCallback(const std::function<void(const KeyReleasedEvent&)> keyReleasedCallback);
 
 	private:
 		inline static GameWindow* mInstance{ nullptr };
