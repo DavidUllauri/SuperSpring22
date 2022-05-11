@@ -13,11 +13,11 @@ namespace TDE
         virtual void Bind() override;
         virtual bool IsBound() const override;
     private:
-        unsigned int mVBO;
-        unsigned int mVAO;
-        unsigned int mEBO;
-        unsigned int mTexture;
-        int mWidth{ 0 };
-        int mHeight{ 0 };
+        unsigned int mVBO;  // Vertex Buffer Object
+        unsigned int mVAO;  // Vertex Array Object
+        unsigned int mEBO;  // Element Buffer Object
+        unsigned int mTexture;  // Holds the ID of the texture object
+        int mWidth{ 0 };    // Width of loaded image in pixels
+        int mHeight{ 0 };   // Height of loaded image in pixels
     };
 }

@@ -8,13 +8,17 @@ namespace TDE
 {
 	OpenGLSprite::OpenGLSprite(const std::string& file)
 	{
-        // load image, create texture and generate mipmaps
         int nChannels;
         stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
+        
         // The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
-        unsigned char* data = stbi_load(file.c_str(), &mWidth, &mHeight, &nChannels, 0);    // file: "../TDE/assets/Star.png"
+        
+        unsigned char* data = stbi_load(file.c_str(), &mWidth, &mHeight, &nChannels, 0);
         if (!data)
             TDE_LOG("ERROR: texture didn't load");
+
+        // TDE_LOG("width: " << mWidth);
+        // TDE_LOG("height: " << mHeight);
 
         float vertices[] = {
             // positions                            // colors
