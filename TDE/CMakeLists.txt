@@ -1,7 +1,9 @@
 set(HEADER_FILES
 	Core.h
 	EntryPoint.h
+	Events.h
 	GameWindow.h
+	KeyCodes.h
 	Renderer.h
 	RendererInterface.h
 	Shader.h
@@ -18,6 +20,7 @@ set(HEADER_FILES
 	)
 
 set(SOURCE_FILES
+	Events.cpp
 	GameWindow.cpp
 	Renderer.cpp
 	Shader.cpp
