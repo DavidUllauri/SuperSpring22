@@ -11,7 +11,7 @@ public:
 	bool CollideX(const Entity& one, const Entity& two);
 	bool CollideY(const Entity& one, const Entity& two);
 private:
-	Entity mPlayer{ {"assets/img/Fin_right_100.png", "assets/img/Fin_left_100.png"} };
+	Entity mPlayer{ {"assets/img/Star.png", "assets/img/Star.png"} };	// Entity(right,left)
 	std::vector<Entity> Map;
 
 	enum class PlayerStates { Standing, Running, Jumping } mPlayerState{PlayerStates::Standing};
