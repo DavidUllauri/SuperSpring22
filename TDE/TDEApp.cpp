@@ -11,43 +11,26 @@
 
 namespace TDE
 {
+	TDEApp::TDEApp()
+	{
+		TDE::GameWindow::Init();
+
+		TDE::GameWindow::GetWindow()->CreateWindow(1000, 800, "game window");
+
+		Renderer::Init();
+	}
+
 	void TDEApp::Run()
 	{
 		TDE_LOG("TDE running...");
 
-		TDE::GameWindow::Init();
-
-		TDE::GameWindow::GetWindow()->CreateWindow(800, 600, "game window");
-
-
-		Renderer::Init();
-
-		//TDE::Sprite star{ "../TDE/assets/container.jpg" };
-		TDE::Sprite star{ "../TDE/assets/img/Star_sm.png" };
-
 		mNextFrameTime = std::chrono::steady_clock::now() + mFrameDuration;
-
-		int x{ 50 }, y{ 50 };
-
-		auto keyPressed = [&x](const KeyPressedEvent& event) {
-			TDE_LOG("Pressed: " << event.GetKeyCode()); 
-			if (event.GetKeyCode() == TDE_KEY_LEFT) x -= 5;
-			else if (event.GetKeyCode() == TDE_KEY_RIGHT) x += 5;
-		};
-		auto keyReleased = [](const KeyReleasedEvent& event) {
-			TDE_LOG("Released: " << event.GetKeyCode()); 
-		};
-		SetKeyPressedCallback(keyPressed);
-		SetKeyReleasedCallback(keyReleased);
 
 		while (true) // !glfwWindowShouldClose(window)
 		{
-			OnUpdate();
-
 			Renderer::ClearScreen();
 
-			Renderer::Draw(star, x, y, 1);
-
+			OnUpdate();
 
 			std::this_thread::sleep_until(mNextFrameTime);
 			

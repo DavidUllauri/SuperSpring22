@@ -10,6 +10,7 @@ namespace TDE
 	class TDE_API TDEApp
 	{
 	public:
+		TDEApp();
 		void Run();
 		virtual void OnUpdate();
 		virtual void SetKeyPressedCallback(const std::function<void(const KeyPressedEvent&)>& keyPressedCallback);
