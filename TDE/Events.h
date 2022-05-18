@@ -1,8 +1,10 @@
 #pragma once
 
+#include "Core.h"
+
 namespace TDE
 {
-	class KeyPressedEvent
+	class TDE_API KeyPressedEvent
 	{
 	public:
 		KeyPressedEvent(int codeOfKey);
@@ -14,7 +16,7 @@ namespace TDE
 		int mKeyCode;
 	};
 
-	class KeyReleasedEvent
+	class TDE_API KeyReleasedEvent
 	{
 	public:
 		KeyReleasedEvent(int codeOfKey);
