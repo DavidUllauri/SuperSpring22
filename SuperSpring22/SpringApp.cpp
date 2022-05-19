@@ -1,4 +1,8 @@
 #include "SpringApp.h"
+#include <iostream>
+
+int prevX{ 0 }, prevY{ 0 };
+bool colAboveBottom = { false };
 
 SpringApp::SpringApp()
 {
@@ -13,6 +17,12 @@ SpringApp::SpringApp()
 			mHorizontalSpeed = 5;
 			mPlayer.SetActiveImage(0);
 			break;
+		case TDE_KEY_UP:
+			mVerticalSpeed = 5;
+			break;
+		case TDE_KEY_DOWN:
+			mVerticalSpeed = -5;
+			break;
 		default:
 			break;
 		}
@@ -21,6 +31,7 @@ SpringApp::SpringApp()
 
 	SetKeyReleasedCallback([this](const TDE::KeyReleasedEvent& e) {
 		mHorizontalSpeed = 0;
+		mVerticalSpeed = 0;
 	});
 	mDangers[0].SetX(400);
 	mDangers[0].SetY(400);
@@ -30,43 +41,15 @@ void SpringApp::OnUpdate()
 {
 	mPlayer.SetX(mPlayer.GetX() + mHorizontalSpeed);
 
-	if (mDangers[0].GetY() < 0)
-		mEnemyVSpeed *= -1;
-	else if (mDangers[0].GetY() > TDE::GameWindow::GetWindow()->GetHeight() - mDangers[0].GetHeight())
-		mEnemyVSpeed *= -1;
+	if (mHorizontalSpeed != 0)
+		mPlayer.HorizontalCollisions(mDangers[0], mHorizontalSpeed);
+	
+	mPlayer.SetY(mPlayer.GetY() + mVerticalSpeed);
 
-	mDangers[0].SetY(mDangers[0].GetY() + mEnemyVSpeed);
+	if (mVerticalSpeed != 0)
+		mPlayer.VerticalCollisions(mDangers[0], mVerticalSpeed);
 
-	if (Collide(mPlayer, mDangers[0]))
-	{
-		exit(0);
-	}
 
 	mDangers[0].Draw();
 	mPlayer.Draw();
-}
-
-bool SpringApp::Collide(const Entity& one, const Entity& two)
-{
-	int oneLeft{ one.GetX() };
-	int oneRight{ one.GetX() + one.GetWidth() };
-	int twoLeft{ two.GetX() };
-	int twoRight{ two.GetX() + two.GetWidth() };
-
-	int oneBottom{ one.GetY() };
-	int oneTop{ one.GetY() + one.GetHeight() };
-	int twoBottom{ two.GetY() };
-	int twoTop{ two.GetY() + two.GetHeight() };
-
-	bool collideX{ false };
-	if ((oneLeft <= twoLeft and twoLeft <= oneRight) or
-		(twoLeft <= oneLeft and oneLeft <= twoRight))
-		collideX = true;
-
-	bool collideY{ false };
-	if ((oneBottom <= twoBottom and twoBottom <= oneTop) or
-		(twoBottom <= oneBottom and oneBottom <= twoTop))
-		collideY = true;
-
-	return collideX and collideY;
 }
