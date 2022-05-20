@@ -71,7 +71,7 @@ void Entity::Draw()
     TDE::Renderer::Draw(mImages[mActiveImage], mXPos, mYPos, mZPos);
 }
 
-bool Entity::HorizontalCollisions(Entity& other, int& velocity)
+bool Entity::HorizontalCollisions(Entity& other, int velocity)
 {
     int directionX = (velocity > 0) ? 1 : -1;
     int oneLeft{ mXPos };
@@ -106,7 +106,7 @@ bool Entity::HorizontalCollisions(Entity& other, int& velocity)
     return collideY;
 }
 
-bool Entity::VerticalCollisions(Entity& other, int& velocity)
+bool Entity::VerticalCollisions(Entity& other, int velocity)
 {
     int directionY = (velocity > 0) ? 1 : -1;
     int oneLeft{ mXPos };

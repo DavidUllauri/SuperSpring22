@@ -1,8 +1,12 @@
 #include "SpringApp.h"
 #include <iostream>
+#include <string>
+#include <fstream>
+#include <sstream>
 
 int prevX{ 0 }, prevY{ 0 };
 bool colAboveBottom = { false };
+int gravity = -10;
 
 SpringApp::SpringApp()
 {
@@ -23,6 +27,8 @@ SpringApp::SpringApp()
 		case TDE_KEY_DOWN:
 			mVerticalSpeed = -5;
 			break;
+		case TDE_KEY_SPACE:
+			mVerticalSpeed = -1;
 		default:
 			break;
 		}
@@ -31,10 +37,18 @@ SpringApp::SpringApp()
 
 	SetKeyReleasedCallback([this](const TDE::KeyReleasedEvent& e) {
 		mHorizontalSpeed = 0;
-		mVerticalSpeed = 0;
+		mVerticalSpeed = 1;
 	});
 	mDangers[0].SetX(400);
 	mDangers[0].SetY(400);
+
+	for (int i = 0; i < 8; i++)
+	{
+		Entity obj{ {"assets/img/tile.png"} };
+		obj.SetX(i * 100);
+		obj.SetY(0);
+		gamelevel.push_back(obj);
+	}
 }
 
 void SpringApp::OnUpdate()
@@ -43,13 +57,20 @@ void SpringApp::OnUpdate()
 
 	if (mHorizontalSpeed != 0)
 		mPlayer.HorizontalCollisions(mDangers[0], mHorizontalSpeed);
+	for (Entity& tile : gamelevel)
+		if (mHorizontalSpeed != 0)
+			mPlayer.HorizontalCollisions(tile, mHorizontalSpeed);
 	
-	mPlayer.SetY(mPlayer.GetY() + mVerticalSpeed);
+	mPlayer.SetY(mPlayer.GetY() + gravity * mVerticalSpeed);
 
-	if (mVerticalSpeed != 0)
-		mPlayer.VerticalCollisions(mDangers[0], mVerticalSpeed);
-
+	if (gravity != 0)
+		mPlayer.VerticalCollisions(mDangers[0], gravity * mVerticalSpeed);
+	for (Entity& tile : gamelevel)
+		if (gravity != 0)
+			mPlayer.VerticalCollisions(tile, gravity * mVerticalSpeed);
 
 	mDangers[0].Draw();
 	mPlayer.Draw();
+	for (Entity& tile : gamelevel)
+		tile.Draw();
 }

@@ -24,12 +24,12 @@ public:
 
 	void Draw();
 
-	bool HorizontalCollisions(Entity& other, int& velocity);
-	bool VerticalCollisions(Entity& other, int& velocity);
+	bool HorizontalCollisions(Entity& other, int velocity);
+	bool VerticalCollisions(Entity& other, int velocity);
 
 private:
 	int mXPos{ 0 };
-	int mYPos{ 0 };
+	int mYPos{ 100 };
 	int mZPos{ 0 };
 
 	bool isSolid{ true };
