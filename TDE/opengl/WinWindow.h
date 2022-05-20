@@ -18,6 +18,7 @@ namespace TDE
 		virtual int GetHeight() const override;
 		virtual void SetKeyPressedCallback(const std::function<void(const KeyPressedEvent&)> keyPressedCallback) override;
 		virtual void SetKeyReleasedCallback(const std::function<void(const KeyReleasedEvent&)> keyReleasedCallback) override;
+		virtual bool WindowShouldClose() override;
 		~WinWindow();
 
 	private:

@@ -65,4 +65,9 @@ namespace TDE
 		mWindow->SetKeyReleasedCallback(keyReleasedCallback);
 	}
 
+	bool GameWindow::WindowShouldClose()
+	{
+		return mWindow->WindowShouldClose();
+	}
+
 }

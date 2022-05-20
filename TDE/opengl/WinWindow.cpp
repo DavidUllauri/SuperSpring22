@@ -91,4 +91,9 @@ namespace TDE
 		mCallbacks.keyReleasedCallback = keyReleasedCallback;
 	}
 
+	bool WinWindow::WindowShouldClose()
+	{
+		return glfwWindowShouldClose(m_window);
+	}
+
 }

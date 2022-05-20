@@ -21,6 +21,8 @@ namespace TDE
 		void SetKeyPressedCallback(const std::function<void(const KeyPressedEvent&)> keyPressedCallback);
 		void SetKeyReleasedCallback(const std::function<void(const KeyReleasedEvent&)> keyReleasedCallback);
 
+		bool WindowShouldClose();
+
 	private:
 		inline static GameWindow* mInstance{ nullptr };
 

@@ -26,7 +26,7 @@ namespace TDE
 
 		mNextFrameTime = std::chrono::steady_clock::now() + mFrameDuration;
 
-		while (true) // !glfwWindowShouldClose(window)
+		while (!WindowShouldClose()) 
 		{
 			Renderer::ClearScreen();
 
@@ -52,5 +52,9 @@ namespace TDE
 	void TDEApp::SetKeyReleasedCallback(const std::function<void(const KeyReleasedEvent&)>& keyReleasedCallback)
 	{
 		GameWindow::GetWindow()->SetKeyReleasedCallback(keyReleasedCallback);
+	}
+	bool TDEApp::WindowShouldClose()
+	{
+		return GameWindow::GetWindow()->WindowShouldClose();
 	}
 }
