@@ -17,6 +17,7 @@ namespace TDE
 		void PollEvents();	// Prof calls it CollectEvents()
 		int GetWidth() const;
 		int GetHeight() const;
+		float GetTime() const;
 		
 		void SetKeyPressedCallback(const std::function<void(const KeyPressedEvent&)> keyPressedCallback);
 		void SetKeyReleasedCallback(const std::function<void(const KeyReleasedEvent&)> keyReleasedCallback);

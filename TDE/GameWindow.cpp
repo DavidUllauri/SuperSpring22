@@ -55,6 +55,11 @@ namespace TDE
 		return mWindow->GetHeight();
 	}
 
+	float GameWindow::GetTime() const
+	{
+		return mWindow->GetTime();
+	}
+
 	void GameWindow::SetKeyPressedCallback(const std::function<void(const KeyPressedEvent&)> keyPressedCallback)
 	{
 		mWindow->SetKeyPressedCallback(keyPressedCallback);

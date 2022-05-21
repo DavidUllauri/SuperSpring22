@@ -73,6 +73,11 @@ namespace TDE
 		return height;
 	}
 
+	float WinWindow::GetTime() const
+	{
+		return glfwGetTime();
+	}
+
 	WinWindow::~WinWindow()
 	{
 		if(m_window != nullptr)

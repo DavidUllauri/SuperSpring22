@@ -16,6 +16,7 @@ namespace TDE
 		virtual void PollEvents() override;
 		virtual int GetWidth() const override;
 		virtual int GetHeight() const override;
+		virtual float GetTime() const override;
 		virtual void SetKeyPressedCallback(const std::function<void(const KeyPressedEvent&)> keyPressedCallback) override;
 		virtual void SetKeyReleasedCallback(const std::function<void(const KeyReleasedEvent&)> keyReleasedCallback) override;
 		virtual bool WindowShouldClose() override;

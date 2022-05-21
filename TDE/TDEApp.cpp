@@ -25,12 +25,17 @@ namespace TDE
 		TDE_LOG("TDE running...");
 
 		mNextFrameTime = std::chrono::steady_clock::now() + mFrameDuration;
+		float lastFrame{ 0.0f }, deltaTime{ 0.0f };
 
 		while (!WindowShouldClose()) 
 		{
+			float currentFrame = GameWindow::GetWindow()->GetTime();
+			deltaTime = currentFrame - lastFrame;
+			lastFrame = currentFrame;
+
 			Renderer::ClearScreen();
 
-			OnUpdate();
+			OnUpdate(deltaTime);
 
 			std::this_thread::sleep_until(mNextFrameTime);
 			
@@ -40,7 +45,7 @@ namespace TDE
 			mNextFrameTime += mFrameDuration;
 		}
 	}
-	void TDEApp::OnUpdate()
+	void TDEApp::OnUpdate(float deltaTime)
 	{
 	}
 	
