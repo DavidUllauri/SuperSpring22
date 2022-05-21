@@ -3,6 +3,17 @@
 #include "TDE.h"
 #include <vector>
 
+struct CollisionInfo
+{
+	bool left, right;
+	bool above, below;
+
+	void Reset() {
+		left = right = false;
+		above = below = false;
+	}
+};
+
 class Entity
 {
 public:
@@ -27,9 +38,10 @@ public:
 	bool HorizontalCollisions(Entity& other, int velocity);
 	bool VerticalCollisions(Entity& other, int velocity);
 
+	CollisionInfo collisions;
 private:
 	int mXPos{ 0 };
-	int mYPos{ 100 };
+	int mYPos{ 800 };
 	int mZPos{ 0 };
 
 	bool isSolid{ true };

@@ -134,9 +134,19 @@ bool Entity::VerticalCollisions(Entity& other, int velocity)
     if (hit)
     {
         if (directionY == 1)
+        {
             mYPos = twoBottom - mImages[mActiveImage].GetHeight();
+
+            collisions.above = true;
+            collisions.below = false;
+        }
         else if (directionY == -1)
+        {
             mYPos = twoTop;
+
+            collisions.above = false;
+            collisions.below = true;
+        }
     }
     return collideY;
 }
