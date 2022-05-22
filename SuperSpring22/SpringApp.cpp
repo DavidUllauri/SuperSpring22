@@ -5,9 +5,6 @@
 #include <sstream>
 #include <chrono>
 
-int prevX{ 0 }, prevY{ 0 };
-bool colAboveBottom = { false };
-
 SpringApp::SpringApp():
 	Keys(), mTimeToApex(0.4f), mJumpHeight(4.0f)
 {
@@ -24,8 +21,11 @@ SpringApp::SpringApp():
 			Keys[e.GetKeyCode()] = false;
 	});
 
-	mDangers[0].SetX(400);
-	mDangers[0].SetY(400);
+	mDangers[0].SetX(600);
+	mDangers[0].SetY(100);
+
+	mStar.SetX(700);
+	mStar.SetY(100);
 
 	for (int i = 0; i < 8; i++) // Game Map
 	{
@@ -38,40 +38,92 @@ SpringApp::SpringApp():
 
 void SpringApp::OnUpdate(float deltaTime)
 {
-	int inputx = GetInputX(mPlayer); // 1 for right, -1 for left, 0 standing still
-	mXVelocity = mHorizontalSpeed * inputx;
+	if (mGameState == GameState::ACTIVE)
+	{
+		int inputx = GetInputX(mPlayer); // 1 for right, -1 for left, 0 standing still
+		mPlayer.SetActiveImage(inputx);
+		mXVelocity = mHorizontalSpeed * inputx;
 	
-	if (mPlayer.collisions.below or mPlayer.collisions.above)
-		mYVelocity = 0;
+		if (mPlayer.collisions.below or mPlayer.collisions.above)
+			mYVelocity = 0;
 
-	if (Keys[TDE_KEY_SPACE] and mPlayer.collisions.below)
-		mYVelocity = mJumpSpeed;
+		if (Keys[TDE_KEY_SPACE] and mPlayer.collisions.below)
+			mYVelocity = mJumpSpeed;
 	
-	mYVelocity += mGravity * deltaTime;
-	mYVelocity = (mYVelocity < -22) ? -22 : mYVelocity;
+		mYVelocity += mGravity * deltaTime;
+		mYVelocity = (mYVelocity < -22) ? -22 : mYVelocity;
 
-	mPlayer.collisions.Reset();
+		mPlayer.collisions.Reset();
 
-	mPlayer.SetX(mPlayer.GetX() + mXVelocity);
+		mPlayer.SetX(mPlayer.GetX() + mXVelocity);
 
-	if (mXVelocity != 0)
-		mPlayer.HorizontalCollisions(mDangers[0], mXVelocity);
-	for (Entity& tile : gamelevel)
-		if (mXVelocity != 0)
-			mPlayer.HorizontalCollisions(tile, mXVelocity);
+		if (mPlayer.HorizontalCollisions(mDangers[0], mXVelocity))
+		{
+			mGameState = GameState::LOSE;
+			mGameOverImage.SetY(0);
+		}
+		if (mPlayer.HorizontalCollisions(mStar, mXVelocity))
+		{
+			mGameState = GameState::WIN;
+			mWinImage.SetY(0);
+		}
+		for (Entity& tile : gamelevel)
+			if (mXVelocity != 0)
+				mPlayer.HorizontalCollisions(tile, mXVelocity);
 	
-	mPlayer.SetY(mPlayer.GetY() + mYVelocity);
+		mPlayer.SetY(mPlayer.GetY() + mYVelocity);
 
-	if (mGravity != 0)
-		mPlayer.VerticalCollisions(mDangers[0], mYVelocity);
-	for (Entity& tile : gamelevel)
-		if (mGravity != 0)
-			mPlayer.VerticalCollisions(tile, mYVelocity);
+		if (mYVelocity != 0)
+		{
+			if (mPlayer.VerticalCollisions(mDangers[0], mYVelocity))
+			{
+				mGameState = GameState::LOSE;
+				mGameOverImage.SetY(0);
+			}
+			if (mPlayer.VerticalCollisions(mStar, mYVelocity))
+			{
+				mGameState = GameState::WIN;
+				mWinImage.SetY(0);
+			}
+			for (Entity& tile : gamelevel)
+				mPlayer.VerticalCollisions(tile, mYVelocity);
 
-	mDangers[0].Draw();
-	mPlayer.Draw();
-	for (Entity& tile : gamelevel)
-		tile.Draw();
+		}
+
+		mDangers[0].SetX(mDangers[0].GetX() - 2);
+
+		mDangers[0].Draw();
+		mStar.Draw();
+		mPlayer.Draw();
+		for (Entity& tile : gamelevel)
+			tile.Draw();
+	}
+	else if (mGameState == GameState::LOSE)
+	{
+		mGameOverImage.Draw();
+		if (Keys[TDE_KEY_ENTER, TDE_KEY_SPACE])
+		{
+			mPlayer.SetX(0);
+			mPlayer.SetY(800);
+			mDangers[0].SetX(600);
+			mGameState = GameState::ACTIVE;
+		}
+	}
+	else if (mGameState == GameState::WIN)
+	{
+		mWinImage.Draw();
+		if (Keys[TDE_KEY_ENTER, TDE_KEY_SPACE])
+		{
+			mPlayer.SetX(0);
+			mPlayer.SetY(800);
+			mDangers[0].SetX(600);
+			mGameState = GameState::ACTIVE;
+		}
+	}
+	else
+	{
+		mGameState = GameState::ACTIVE;
+	}
 }
 
 int SpringApp::GetInputX(Entity& gameObj)
@@ -82,12 +134,10 @@ int SpringApp::GetInputX(Entity& gameObj)
 	}
 	else if (Keys[TDE_KEY_LEFT])
 	{
-		gameObj.SetActiveImage(1);
 		return -1;
 	}
 	else if (Keys[TDE_KEY_RIGHT])
 	{
-		gameObj.SetActiveImage(0);
 		return 1;
 	}
 	else

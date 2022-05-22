@@ -62,9 +62,30 @@ void Entity::SetSolid(bool solid)
     isSolid = solid;
 }
 
-void Entity::SetActiveImage(int activeImage)
+void Entity::SetActiveImage(int directionX)
 {
-    mActiveImage = activeImage;
+    if (collisions.below)
+    {
+        if (directionX == 1 || mActiveImage == 2)
+        {
+            mActiveImage = 0;
+        }
+        else if (directionX == -1 || mActiveImage == 3)
+        {
+            mActiveImage = 1;
+        }
+    }
+    else if (!collisions.below)
+    {
+        if (directionX == 1 || mActiveImage == 0)
+        {
+            mActiveImage = 2;
+        }
+        else if (directionX == -1 || mActiveImage == 1)
+        {
+            mActiveImage = 3;
+        }
+    }
 }
 
 void Entity::Draw()
@@ -74,7 +95,7 @@ void Entity::Draw()
 
 bool Entity::HorizontalCollisions(Entity& other, int velocity)
 {
-    int directionX = (velocity > 0) ? 1 : -1;
+    int directionX = (velocity < 0) ? -1 : 1;
     int oneLeft{ mXPos };
     int oneRight{ mXPos + mImages[mActiveImage].GetWidth() };
     int twoLeft{ other.GetX() };
@@ -104,7 +125,7 @@ bool Entity::HorizontalCollisions(Entity& other, int velocity)
         else if (directionX == -1)
             mXPos = twoRight;
     }
-    return collideY;
+    return hit;
 }
 
 bool Entity::VerticalCollisions(Entity& other, int velocity)
@@ -149,5 +170,5 @@ bool Entity::VerticalCollisions(Entity& other, int velocity)
             collisions.below = true;
         }
     }
-    return collideY;
+    return hit;
 }

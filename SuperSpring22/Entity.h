@@ -41,7 +41,7 @@ public:
 	CollisionInfo collisions;
 private:
 	int mXPos{ 0 };
-	int mYPos{ 800 };
+	int mYPos{ 700 };
 	int mZPos{ 0 };
 
 	bool isSolid{ true };
