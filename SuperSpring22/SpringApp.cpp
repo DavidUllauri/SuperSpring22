@@ -3,42 +3,26 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <chrono>
 
 int prevX{ 0 }, prevY{ 0 };
 bool colAboveBottom = { false };
-int gravity = -10;
+float gravity{ -20 };
+float yVelocity{ 0 };
 
 SpringApp::SpringApp()
+	: Keys()
 {
-	auto keypressedcallbackfunction = [this](const TDE::KeyPressedEvent& e) {
-		switch (e.GetKeyCode())
-		{
-		case TDE_KEY_LEFT:
-			mHorizontalSpeed = -5;
-			mPlayer.SetActiveImage(1);
-			break;
-		case TDE_KEY_RIGHT:
-			mHorizontalSpeed = 5;
-			mPlayer.SetActiveImage(0);
-			break;
-		case TDE_KEY_UP:
-			mVerticalSpeed = 5;
-			break;
-		case TDE_KEY_DOWN:
-			mVerticalSpeed = -5;
-			break;
-		case TDE_KEY_SPACE:
-			mVerticalSpeed = -1;
-		default:
-			break;
-		}
-	};
-	SetKeyPressedCallback(keypressedcallbackfunction);
+	SetKeyPressedCallback([this](const TDE::KeyPressedEvent& e) {
+		if (e.GetKeyCode() >= 0 and e.GetKeyCode() < 1024)
+			Keys[e.GetKeyCode()] = true;
+	});
 
 	SetKeyReleasedCallback([this](const TDE::KeyReleasedEvent& e) {
-		mHorizontalSpeed = 0;
-		mVerticalSpeed = 1;
+		if (e.GetKeyCode() >= 0 and e.GetKeyCode() < 1024)
+			Keys[e.GetKeyCode()] = false;
 	});
+
 	mDangers[0].SetX(400);
 	mDangers[0].SetY(400);
 
@@ -51,8 +35,21 @@ SpringApp::SpringApp()
 	}
 }
 
-void SpringApp::OnUpdate()
+void SpringApp::OnUpdate(float deltaTime)
 {
+	int inputx = GetInputX(mPlayer); // 1 for right, -1 for left, 0 standing still
+	mHorizontalSpeed = 5 * inputx;
+	
+	if (mPlayer.collisions.below or mPlayer.collisions.above)
+		yVelocity = 0;
+
+	if (Keys[TDE_KEY_SPACE] and mPlayer.collisions.below)
+		yVelocity = 13;
+	
+	yVelocity += gravity * deltaTime;
+
+	mPlayer.collisions.Reset();
+
 	mPlayer.SetX(mPlayer.GetX() + mHorizontalSpeed);
 
 	if (mHorizontalSpeed != 0)
@@ -61,16 +58,38 @@ void SpringApp::OnUpdate()
 		if (mHorizontalSpeed != 0)
 			mPlayer.HorizontalCollisions(tile, mHorizontalSpeed);
 	
-	mPlayer.SetY(mPlayer.GetY() + gravity * mVerticalSpeed);
+	mPlayer.SetY(mPlayer.GetY() + yVelocity);
 
 	if (gravity != 0)
-		mPlayer.VerticalCollisions(mDangers[0], gravity * mVerticalSpeed);
+		mPlayer.VerticalCollisions(mDangers[0], yVelocity);
 	for (Entity& tile : gamelevel)
 		if (gravity != 0)
-			mPlayer.VerticalCollisions(tile, gravity * mVerticalSpeed);
+			mPlayer.VerticalCollisions(tile, yVelocity);
 
 	mDangers[0].Draw();
 	mPlayer.Draw();
 	for (Entity& tile : gamelevel)
 		tile.Draw();
+}
+
+int SpringApp::GetInputX(Entity& gameObj)
+{
+	if (Keys[TDE_KEY_LEFT] and Keys[TDE_KEY_RIGHT])
+	{
+		return 0;
+	}
+	else if (Keys[TDE_KEY_LEFT])
+	{
+		gameObj.SetActiveImage(1);
+		return -1;
+	}
+	else if (Keys[TDE_KEY_RIGHT])
+	{
+		gameObj.SetActiveImage(0);
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
 }
