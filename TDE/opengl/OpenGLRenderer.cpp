@@ -21,7 +21,7 @@ namespace TDE
 
 	void OpenGLRenderer::ClearScreen()
 	{
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClearColor(0.2f, 0.4f, 0.7f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
