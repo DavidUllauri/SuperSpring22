@@ -18,6 +18,11 @@ private:
 	std::vector<Entity> gamelevel;
 	int mEnemyVSpeed{ -5 };
 
-	int mHorizontalSpeed{ 0 }; // speed measured in pixels per frame
-	int mVerticalSpeed{ 0 }; // speed measured in pixels per frame
+	int mHorizontalSpeed{ 5 }; // speed measured in pixels per frame
+	float mJumpSpeed{ 0 };
+	float mTimeToApex; // Time player takes to reach Apex of jump
+	float mJumpHeight; // Desired jump height
+	float mXVelocity{ 0 };
+	float mYVelocity{ 0 };
+	float mGravity{ 0 };
 };

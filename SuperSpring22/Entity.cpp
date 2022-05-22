@@ -4,6 +4,7 @@
 Entity::Entity(const std::vector<std::string>& filenames):
     mImages(filenames.begin(), filenames.end())
 {
+    collisions.Reset();
 }
 
 int Entity::GetX() const

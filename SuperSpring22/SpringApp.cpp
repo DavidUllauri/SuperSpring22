@@ -7,12 +7,13 @@
 
 int prevX{ 0 }, prevY{ 0 };
 bool colAboveBottom = { false };
-float gravity{ -20 };
-float yVelocity{ 0 };
 
-SpringApp::SpringApp()
-	: Keys()
+SpringApp::SpringApp():
+	Keys(), mTimeToApex(0.4f), mJumpHeight(4.0f)
 {
+	mGravity = (-2 * mJumpHeight) / (mTimeToApex * mTimeToApex);
+	mJumpSpeed = (2 * mJumpHeight) / mTimeToApex;
+
 	SetKeyPressedCallback([this](const TDE::KeyPressedEvent& e) {
 		if (e.GetKeyCode() >= 0 and e.GetKeyCode() < 1024)
 			Keys[e.GetKeyCode()] = true;
@@ -26,7 +27,7 @@ SpringApp::SpringApp()
 	mDangers[0].SetX(400);
 	mDangers[0].SetY(400);
 
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < 8; i++) // Game Map
 	{
 		Entity obj{ {"assets/img/tile.png"} };
 		obj.SetX(i * 100);
@@ -38,33 +39,34 @@ SpringApp::SpringApp()
 void SpringApp::OnUpdate(float deltaTime)
 {
 	int inputx = GetInputX(mPlayer); // 1 for right, -1 for left, 0 standing still
-	mHorizontalSpeed = 5 * inputx;
+	mXVelocity = mHorizontalSpeed * inputx;
 	
 	if (mPlayer.collisions.below or mPlayer.collisions.above)
-		yVelocity = 0;
+		mYVelocity = 0;
 
 	if (Keys[TDE_KEY_SPACE] and mPlayer.collisions.below)
-		yVelocity = 13;
+		mYVelocity = mJumpSpeed;
 	
-	yVelocity += gravity * deltaTime;
+	mYVelocity += mGravity * deltaTime;
+	mYVelocity = (mYVelocity < -22) ? -22 : mYVelocity;
 
 	mPlayer.collisions.Reset();
 
-	mPlayer.SetX(mPlayer.GetX() + mHorizontalSpeed);
+	mPlayer.SetX(mPlayer.GetX() + mXVelocity);
 
-	if (mHorizontalSpeed != 0)
-		mPlayer.HorizontalCollisions(mDangers[0], mHorizontalSpeed);
+	if (mXVelocity != 0)
+		mPlayer.HorizontalCollisions(mDangers[0], mXVelocity);
 	for (Entity& tile : gamelevel)
-		if (mHorizontalSpeed != 0)
-			mPlayer.HorizontalCollisions(tile, mHorizontalSpeed);
+		if (mXVelocity != 0)
+			mPlayer.HorizontalCollisions(tile, mXVelocity);
 	
-	mPlayer.SetY(mPlayer.GetY() + yVelocity);
+	mPlayer.SetY(mPlayer.GetY() + mYVelocity);
 
-	if (gravity != 0)
-		mPlayer.VerticalCollisions(mDangers[0], yVelocity);
+	if (mGravity != 0)
+		mPlayer.VerticalCollisions(mDangers[0], mYVelocity);
 	for (Entity& tile : gamelevel)
-		if (gravity != 0)
-			mPlayer.VerticalCollisions(tile, yVelocity);
+		if (mGravity != 0)
+			mPlayer.VerticalCollisions(tile, mYVelocity);
 
 	mDangers[0].Draw();
 	mPlayer.Draw();
