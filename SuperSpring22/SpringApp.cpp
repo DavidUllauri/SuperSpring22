@@ -104,7 +104,8 @@ void SpringApp::OnUpdate(float deltaTime)
 		if (Keys[TDE_KEY_ENTER, TDE_KEY_SPACE])
 		{
 			mPlayer.SetX(0);
-			mPlayer.SetY(800);
+			mPlayer.SetY(700);
+			mPlayer.collisions.Reset();
 			mDangers[0].SetX(600);
 			mGameState = GameState::ACTIVE;
 		}
@@ -115,7 +116,8 @@ void SpringApp::OnUpdate(float deltaTime)
 		if (Keys[TDE_KEY_ENTER, TDE_KEY_SPACE])
 		{
 			mPlayer.SetX(0);
-			mPlayer.SetY(800);
+			mPlayer.SetY(700);
+			mPlayer.collisions.Reset();
 			mDangers[0].SetX(600);
 			mGameState = GameState::ACTIVE;
 		}
