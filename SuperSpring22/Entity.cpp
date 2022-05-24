@@ -107,16 +107,16 @@ bool Entity::HorizontalCollisions(Entity& other, int velocity)
     int twoTop{ other.GetY() + other.GetHeight() };
 
     bool collideX{ false };
-    if ((oneLeft <= twoLeft and twoLeft <= oneRight) or
-        (twoLeft <= oneLeft and oneLeft <= twoRight))
+    if ((oneLeft <= twoLeft && twoLeft <= oneRight) ||
+        (twoLeft <= oneLeft && oneLeft <= twoRight))
         collideX = true;
 
     bool collideY{ false };
-    if ((oneBottom <= twoBottom and twoBottom < oneTop) or
-        (twoBottom <= oneBottom and oneBottom < twoTop))
+    if ((oneBottom <= twoBottom && twoBottom < oneTop) ||
+        (twoBottom <= oneBottom && oneBottom < twoTop))
         collideY = true;
 
-    bool hit = collideX and collideY;
+    bool hit = collideX && collideY;
 
     if (hit)
     {
@@ -142,16 +142,16 @@ bool Entity::VerticalCollisions(Entity& other, int velocity)
     int twoTop{ other.GetY() + other.GetHeight() };
 
     bool collideX{ false };
-    if ((oneLeft <= twoLeft and twoLeft < oneRight) or
-        (twoLeft <= oneLeft and oneLeft < twoRight))
+    if ((oneLeft <= twoLeft && twoLeft < oneRight) ||
+        (twoLeft <= oneLeft && oneLeft < twoRight))
         collideX = true;
 
     bool collideY{ false };
-    if ((oneBottom <= twoBottom and twoBottom <= oneTop) or
-        (twoBottom <= oneBottom and oneBottom <= twoTop))
+    if ((oneBottom <= twoBottom && twoBottom <= oneTop) ||
+        (twoBottom <= oneBottom && oneBottom <= twoTop))
         collideY = true;
 
-    bool hit = collideX and collideY;
+    bool hit = collideX && collideY;
 
     if (hit)
     {

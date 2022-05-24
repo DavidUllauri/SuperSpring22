@@ -46,3 +46,7 @@ include_directories(../glad/include)
 target_precompile_headers(TDE PRIVATE pch.h)
 
 target_link_libraries(TDE glfw glad stbi)
+
+file(COPY assets DESTINATION ${PROJECT_BINARY_DIR}/TDE)
+file(COPY assets DESTINATION ${PROJECT_BINARY_DIR}/Debug)
+file(COPY assets DESTINATION ${PROJECT_BINARY_DIR}/Release)

@@ -12,12 +12,12 @@ SpringApp::SpringApp():
 	mJumpSpeed = (2 * mJumpHeight) / mTimeToApex;
 
 	SetKeyPressedCallback([this](const TDE::KeyPressedEvent& e) {
-		if (e.GetKeyCode() >= 0 and e.GetKeyCode() < 1024)
+		if (e.GetKeyCode() >= 0 && e.GetKeyCode() < 1024)
 			Keys[e.GetKeyCode()] = true;
 	});
 
 	SetKeyReleasedCallback([this](const TDE::KeyReleasedEvent& e) {
-		if (e.GetKeyCode() >= 0 and e.GetKeyCode() < 1024)
+		if (e.GetKeyCode() >= 0 && e.GetKeyCode() < 1024)
 			Keys[e.GetKeyCode()] = false;
 	});
 
@@ -44,10 +44,10 @@ void SpringApp::OnUpdate(float deltaTime)
 		mPlayer.SetActiveImage(inputx);
 		mXVelocity = mHorizontalSpeed * inputx;
 	
-		if (mPlayer.collisions.below or mPlayer.collisions.above)
+		if (mPlayer.collisions.below || mPlayer.collisions.above)
 			mYVelocity = 0;
 
-		if (Keys[TDE_KEY_SPACE] and mPlayer.collisions.below)
+		if (Keys[TDE_KEY_SPACE] && mPlayer.collisions.below)
 			mYVelocity = mJumpSpeed;
 	
 		mYVelocity += mGravity * deltaTime;
@@ -130,7 +130,7 @@ void SpringApp::OnUpdate(float deltaTime)
 
 int SpringApp::GetInputX(Entity& gameObj)
 {
-	if (Keys[TDE_KEY_LEFT] and Keys[TDE_KEY_RIGHT])
+	if (Keys[TDE_KEY_LEFT] && Keys[TDE_KEY_RIGHT])
 	{
 		return 0;
 	}
