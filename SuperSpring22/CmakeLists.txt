@@ -1,10 +1,16 @@
 set(HEADER_FILES
+    Enemy.h
     Entity.h
+    GameMap.h
+    Player.h
     SpringApp.h
 )
 
 set(SOURCE_FILES
+    Enemy.cpp
     Entity.cpp
+    GameMap.cpp
+    Player.cpp
     SpringApp.cpp
     main.cpp
 )
