@@ -9,6 +9,7 @@ Project for csci 39541 Game Engines
 - Added struct with collision information to tell if player is standing on a platform
 - Added game map class to generate map from a file
 - The game automatically switches levels when you reach the goal
+- You can close the game window by clicking the x button
 
 ## Input handling
 I used an array `Keys[349]` in `SpringApp` to tell if a key was being pressed
