@@ -1,5 +1,6 @@
 # SuperSpring22
 Project for csci 39541 Game Engines
+![Game Preview](game_prev.jpg)
 # Unique to Project
 - Input handling uses array of bool
 - Collisions is moved to entity and separated into two methods
