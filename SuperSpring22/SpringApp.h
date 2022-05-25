@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "GameMap.h"
 
 class SpringApp : public TDE::TDEApp
 {
@@ -30,7 +31,7 @@ private:
 	Entity mWinImage{ {"assets/img/win_screen.png"} };
 	Entity mStar{ {"assets/img/Star_sm.png"} };
 	Enemy mDanger{ {"assets/img/Skeleton_right.png","assets/img/Skeleton_left.png"} };
-	std::vector<Entity> gamelevel;
+	GameMap gamelevel;
 	
 	enum class GameState { ACTIVE, WIN, LOSE } mGameState{ GameState::ACTIVE };
 	

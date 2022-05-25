@@ -27,13 +27,8 @@ SpringApp::SpringApp():
 	mStar.SetX(900);
 	mStar.SetY(100);
 
-	for (int i = 0; i < 10; i++) // Game Map
-	{
-		Entity obj{ {"assets/img/tile.png"} };
-		obj.SetX(i * 100);
-		obj.SetY(0);
-		gamelevel.push_back(obj);
-	}
+	gamelevel.LoadMapData("assets/levels/one.txt");
+	gamelevel.CreateMap();
 }
 
 void SpringApp::OnUpdate(float deltaTime)
@@ -104,8 +99,7 @@ void SpringApp::Render()
 		mDanger.Draw();
 		mStar.Draw();
 		mPlayer.Draw();
-		for (Entity& tile : gamelevel)
-			tile.Draw();
+		gamelevel.Draw();
 	}
 	else if (mGameState == GameState::LOSE)
 	{
@@ -149,7 +143,7 @@ void SpringApp::DoXCollisions()
 		mGameState = GameState::WIN;
 		mWinImage.SetY(0);
 	}
-	for (Entity& tile : gamelevel)
+	for (Entity& tile : gamelevel.mMap)
 		if (mXVelocity != 0)
 			mPlayer.HorizontalCollisions(tile, mXVelocity);
 }
@@ -166,6 +160,6 @@ void SpringApp::DoYCollisions()
 		mGameState = GameState::WIN;
 		mWinImage.SetY(0);
 	}
-	for (Entity& tile : gamelevel)
+	for (Entity& tile : gamelevel.mMap)
 		mPlayer.VerticalCollisions(tile, mYVelocity);
 }
