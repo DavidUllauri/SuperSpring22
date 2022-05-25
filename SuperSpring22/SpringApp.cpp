@@ -6,7 +6,7 @@
 #include <chrono>
 
 SpringApp::SpringApp():
-	Keys(), mTimeToApex(0.4f), mJumpHeight(4.0f)
+	Keys(), mTimeToApex(0.4f), mJumpHeight(4.0f), currLevel(0)
 {
 	mGravity = (-2 * mJumpHeight) / (mTimeToApex * mTimeToApex);
 	mJumpSpeed = (2 * mJumpHeight) / mTimeToApex;
@@ -20,15 +20,13 @@ SpringApp::SpringApp():
 		if (e.GetKeyCode() >= 0 && e.GetKeyCode() < 1024)
 			Keys[e.GetKeyCode()] = false;
 	});
+	gamelevel[currLevel].CreateMap();
 
-	mDanger.SetX(700);
-	mDanger.SetY(100);
+	mDanger.SetX(gamelevel[currLevel].enemyPosX);
+	mDanger.SetY(gamelevel[currLevel].enemyPosY);
 
-	mStar.SetX(900);
-	mStar.SetY(100);
-
-	gamelevel.LoadMapData("assets/levels/one.txt");
-	gamelevel.CreateMap();
+	mStar.SetX(gamelevel[currLevel].starPosX);
+	mStar.SetY(gamelevel[currLevel].starPosY);
 }
 
 void SpringApp::OnUpdate(float deltaTime)
@@ -38,6 +36,10 @@ void SpringApp::OnUpdate(float deltaTime)
 		// If gamestate is not active don't move the player or check for collisions
 		Render();
 		return;
+	}
+
+	if (mPlayer.GetY() < -100) {
+		ResetGame();
 	}
 
 	int inputx = GetInputX(mPlayer); // 1 for right, -1 for left, 0 standing still
@@ -99,7 +101,7 @@ void SpringApp::Render()
 		mDanger.Draw();
 		mStar.Draw();
 		mPlayer.Draw();
-		gamelevel.Draw();
+		gamelevel[currLevel].Draw();
 	}
 	else if (mGameState == GameState::LOSE)
 	{
@@ -128,7 +130,7 @@ void SpringApp::Render()
 void SpringApp::ResetGame()
 {
 	mPlayer.ResetPlayer();
-	mDanger.ResetEnemy();
+	mDanger.ResetEnemy(gamelevel[currLevel].enemyPosX, gamelevel[currLevel].enemyPosY);
 }
 
 void SpringApp::DoXCollisions()
@@ -140,10 +142,27 @@ void SpringApp::DoXCollisions()
 	}
 	if (mPlayer.HorizontalCollisions(mStar, mXVelocity))
 	{
-		mGameState = GameState::WIN;
-		mWinImage.SetY(0);
+		if (currLevel == 1)
+		{
+			mGameState = GameState::WIN;
+			mWinImage.SetY(0);
+		}
+		else if (currLevel == 0)
+		{
+			currLevel++;
+			gamelevel[currLevel].CreateMap();
+			
+			ResetGame();
+
+			mDanger.SetX(gamelevel[currLevel].enemyPosX);
+			mDanger.SetY(gamelevel[currLevel].enemyPosY);
+
+			mStar.SetX(gamelevel[currLevel].starPosX);
+			mStar.SetY(gamelevel[currLevel].starPosY);
+
+		}
 	}
-	for (Entity& tile : gamelevel.mMap)
+	for (Entity& tile : gamelevel[currLevel].mMap)
 		if (mXVelocity != 0)
 			mPlayer.HorizontalCollisions(tile, mXVelocity);
 }
@@ -157,9 +176,26 @@ void SpringApp::DoYCollisions()
 	}
 	if (mPlayer.VerticalCollisions(mStar, mYVelocity))
 	{
-		mGameState = GameState::WIN;
-		mWinImage.SetY(0);
+		if (currLevel == 1)
+		{
+			mGameState = GameState::WIN;
+			mWinImage.SetY(0);
+		}
+		else if (currLevel == 0)
+		{
+			currLevel++;
+			gamelevel[currLevel].CreateMap();
+
+			ResetGame();
+
+			mDanger.SetX(gamelevel[currLevel].enemyPosX);
+			mDanger.SetY(gamelevel[currLevel].enemyPosY);
+
+			mStar.SetX(gamelevel[currLevel].starPosX);
+			mStar.SetY(gamelevel[currLevel].starPosY);
+
+		}
 	}
-	for (Entity& tile : gamelevel.mMap)
+	for (Entity& tile : gamelevel[currLevel].mMap)
 		mPlayer.VerticalCollisions(tile, mYVelocity);
 }

@@ -25,7 +25,7 @@ void Enemy::Move(int speed, float deltaTime)
     }
 }
 
-void Enemy::ResetEnemy()
+void Enemy::ResetEnemy(const int xPos, const int yPos)
 {
     SetX(700);
     SetActiveImage(0);

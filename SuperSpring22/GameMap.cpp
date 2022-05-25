@@ -1,6 +1,27 @@
 #include "GameMap.h"
 #include <sstream>
 
+GameMap::GameMap(const std::string filename)
+{
+	mMapData.clear();
+
+	int currTile;
+
+	std::string line;
+	std::ifstream ifs(filename);
+	if (ifs)
+	{
+		while (std::getline(ifs, line)) // read each line from file
+		{
+			std::istringstream sstream(line);
+			std::vector<int> row;
+			while (sstream >> currTile) // get each number
+				row.push_back(currTile);
+			mMapData.insert(mMapData.begin(), row); // Insert backwards. TODO: change to stack<vector<int>>
+		}
+	}
+}
+
 void GameMap::CreateMap()
 {
 	int width = mMapData[0].size();
@@ -16,6 +37,16 @@ void GameMap::CreateMap()
 				tempTile.SetX(col * 100);
 				tempTile.SetY(row * 100);
 				mMap.push_back(tempTile);
+			}
+			else if (mMapData[row][col] == 2)
+			{
+				enemyPosX = col * 100;
+				enemyPosY = row * 100;
+			}
+			else if (mMapData[row][col] == 3)
+			{
+				starPosX = col * 100;
+				starPosY = row * 100;
 			}
 		}
 	}

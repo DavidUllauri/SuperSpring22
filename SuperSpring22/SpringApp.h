@@ -19,6 +19,7 @@ public:
 	void DoYCollisions();
 
 	bool Keys[349];
+	int currLevel{ 0 };
 private:
 	// Hero
 	Player mPlayer{ {
@@ -31,7 +32,7 @@ private:
 	Entity mWinImage{ {"assets/img/win_screen.png"} };
 	Entity mStar{ {"assets/img/Star_sm.png"} };
 	Enemy mDanger{ {"assets/img/Skeleton_right.png","assets/img/Skeleton_left.png"} };
-	GameMap gamelevel;
+	std::vector<GameMap> gamelevel{ GameMap("assets/levels/one.txt"), GameMap("assets/levels/two.txt") };
 	
 	enum class GameState { ACTIVE, WIN, LOSE } mGameState{ GameState::ACTIVE };
 	
