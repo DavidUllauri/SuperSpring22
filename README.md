@@ -28,21 +28,21 @@ SetKeyReleasedCallback([this](const TDE::KeyReleasedEvent& e) {
 - Split Collisions function into Vertical and Horizontal function
 ## Physics
 ### Jump Physics
-$v_0$ - initial velocity
-$g$ - gravity
-$t$ - time
-$f(t)$ - current velocity
+$v_0$ - initial velocity \
+$g$ - gravity \
+$t$ - time \
+$f(t)$ - current velocity \
 $$f(t) = -gt \times v_0$$
 ```cpp
 mJumpSpeed = (2 * mJumpHeight) / mTimeToApex;
 ```
 ### Gravity
 Calculated how string gravity should be based off of desired jump height
-$t_h$ - time to reach the desired height
-$h$ - desired jump height ($f(t_h) = h$)
-$v_0$ - initial velocity ($v_0=-gt_h$)
-$g$ - gravity
-$p_0$ - starting position ($0$)
+$t_h$ - time to reach the desired height \
+$h$ - desired jump height ($f(t_h) = h$) \
+$v_0$ - initial velocity ($v_0=-gt_h$) \
+$g$ - gravity \
+$p_0$ - starting position ($0$) \
 $$v_0=\frac{2h}{t_h}$$
 ```cpp
 mGravity = (-2 * mJumpHeight) / (mTimeToApex * mTimeToApex);
