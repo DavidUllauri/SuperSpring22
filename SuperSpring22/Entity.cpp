@@ -62,30 +62,9 @@ void Entity::SetSolid(bool solid)
     isSolid = solid;
 }
 
-void Entity::SetActiveImage(int directionX)
+void Entity::SetActiveImage(int activeImage)
 {
-    if (collisions.below)
-    {
-        if (directionX == 1 || mActiveImage == 2)
-        {
-            mActiveImage = 0;
-        }
-        else if (directionX == -1 || mActiveImage == 3)
-        {
-            mActiveImage = 1;
-        }
-    }
-    else if (!collisions.below)
-    {
-        if (directionX == 1 || mActiveImage == 0)
-        {
-            mActiveImage = 2;
-        }
-        else if (directionX == -1 || mActiveImage == 1)
-        {
-            mActiveImage = 3;
-        }
-    }
+    mActiveImage = activeImage;
 }
 
 void Entity::Draw()

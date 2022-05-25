@@ -21,13 +21,13 @@ SpringApp::SpringApp():
 			Keys[e.GetKeyCode()] = false;
 	});
 
-	mDangers[0].SetX(600);
-	mDangers[0].SetY(100);
+	mDanger.SetX(700);
+	mDanger.SetY(100);
 
-	mStar.SetX(700);
+	mStar.SetX(900);
 	mStar.SetY(100);
 
-	for (int i = 0; i < 8; i++) // Game Map
+	for (int i = 0; i < 10; i++) // Game Map
 	{
 		Entity obj{ {"assets/img/tile.png"} };
 		obj.SetX(i * 100);
@@ -38,94 +38,43 @@ SpringApp::SpringApp():
 
 void SpringApp::OnUpdate(float deltaTime)
 {
-	if (mGameState == GameState::ACTIVE)
+	if (mGameState != GameState::ACTIVE)
 	{
-		int inputx = GetInputX(mPlayer); // 1 for right, -1 for left, 0 standing still
-		mPlayer.SetActiveImage(inputx);
-		mXVelocity = mHorizontalSpeed * inputx;
+		// If gamestate is not active don't move the player or check for collisions
+		Render();
+		return;
+	}
+
+	int inputx = GetInputX(mPlayer); // 1 for right, -1 for left, 0 standing still
+
+	mPlayer.TurnSprite(inputx);
+	mDanger.Move(mEnemyVSpeed, deltaTime);
+
+	mXVelocity = mHorizontalSpeed * inputx;
 	
-		if (mPlayer.collisions.below || mPlayer.collisions.above)
-			mYVelocity = 0;
+	if (mPlayer.collisions.below || mPlayer.collisions.above)
+		mYVelocity = 0;
 
-		if (Keys[TDE_KEY_SPACE] && mPlayer.collisions.below)
-			mYVelocity = mJumpSpeed;
+	if (Keys[TDE_KEY_SPACE] && mPlayer.collisions.below)
+		mYVelocity = mJumpSpeed;
 	
-		mYVelocity += mGravity * deltaTime;
-		mYVelocity = (mYVelocity < -22) ? -22 : mYVelocity;
+	mYVelocity += mGravity * deltaTime;
+	mYVelocity = (mYVelocity < -22) ? -22 : mYVelocity;
 
-		mPlayer.collisions.Reset();
+	mPlayer.collisions.Reset();
 
-		mPlayer.SetX(mPlayer.GetX() + mXVelocity);
+	mPlayer.SetX(mPlayer.GetX() + mXVelocity);
 
-		if (mPlayer.HorizontalCollisions(mDangers[0], mXVelocity))
-		{
-			mGameState = GameState::LOSE;
-			mGameOverImage.SetY(0);
-		}
-		if (mPlayer.HorizontalCollisions(mStar, mXVelocity))
-		{
-			mGameState = GameState::WIN;
-			mWinImage.SetY(0);
-		}
-		for (Entity& tile : gamelevel)
-			if (mXVelocity != 0)
-				mPlayer.HorizontalCollisions(tile, mXVelocity);
+	DoXCollisions();
 	
-		mPlayer.SetY(mPlayer.GetY() + mYVelocity);
+	mPlayer.SetY(mPlayer.GetY() + mYVelocity);
 
-		if (mYVelocity != 0)
-		{
-			if (mPlayer.VerticalCollisions(mDangers[0], mYVelocity))
-			{
-				mGameState = GameState::LOSE;
-				mGameOverImage.SetY(0);
-			}
-			if (mPlayer.VerticalCollisions(mStar, mYVelocity))
-			{
-				mGameState = GameState::WIN;
-				mWinImage.SetY(0);
-			}
-			for (Entity& tile : gamelevel)
-				mPlayer.VerticalCollisions(tile, mYVelocity);
-
-		}
-
-		mDangers[0].SetX(mDangers[0].GetX() - 2);
-
-		mDangers[0].Draw();
-		mStar.Draw();
-		mPlayer.Draw();
-		for (Entity& tile : gamelevel)
-			tile.Draw();
-	}
-	else if (mGameState == GameState::LOSE)
+	if (mYVelocity != 0)
 	{
-		mGameOverImage.Draw();
-		if (Keys[TDE_KEY_ENTER, TDE_KEY_SPACE])
-		{
-			mPlayer.SetX(0);
-			mPlayer.SetY(700);
-			mPlayer.collisions.Reset();
-			mDangers[0].SetX(600);
-			mGameState = GameState::ACTIVE;
-		}
+		DoYCollisions();
 	}
-	else if (mGameState == GameState::WIN)
-	{
-		mWinImage.Draw();
-		if (Keys[TDE_KEY_ENTER, TDE_KEY_SPACE])
-		{
-			mPlayer.SetX(0);
-			mPlayer.SetY(700);
-			mPlayer.collisions.Reset();
-			mDangers[0].SetX(600);
-			mGameState = GameState::ACTIVE;
-		}
-	}
-	else
-	{
-		mGameState = GameState::ACTIVE;
-	}
+
+	Render();
 }
 
 int SpringApp::GetInputX(Entity& gameObj)
@@ -146,4 +95,77 @@ int SpringApp::GetInputX(Entity& gameObj)
 	{
 		return 0;
 	}
+}
+
+void SpringApp::Render()
+{
+	if (mGameState == GameState::ACTIVE)
+	{
+		mDanger.Draw();
+		mStar.Draw();
+		mPlayer.Draw();
+		for (Entity& tile : gamelevel)
+			tile.Draw();
+	}
+	else if (mGameState == GameState::LOSE)
+	{
+		mGameOverImage.Draw();
+		if (Keys[TDE_KEY_ENTER, TDE_KEY_SPACE])
+		{
+			ResetGame();
+			mGameState = GameState::ACTIVE;
+		}
+	}
+	else if (mGameState == GameState::WIN)
+	{
+		mWinImage.Draw();
+		if (Keys[TDE_KEY_ENTER, TDE_KEY_SPACE])
+		{
+			ResetGame();
+			mGameState = GameState::ACTIVE;
+		}
+	}
+	else
+	{
+		mGameState = GameState::ACTIVE;
+	}
+}
+
+void SpringApp::ResetGame()
+{
+	mPlayer.ResetPlayer();
+	mDanger.ResetEnemy();
+}
+
+void SpringApp::DoXCollisions()
+{
+	if (mPlayer.HorizontalCollisions(mDanger, mXVelocity))
+	{
+		mGameState = GameState::LOSE;
+		mGameOverImage.SetY(0);
+	}
+	if (mPlayer.HorizontalCollisions(mStar, mXVelocity))
+	{
+		mGameState = GameState::WIN;
+		mWinImage.SetY(0);
+	}
+	for (Entity& tile : gamelevel)
+		if (mXVelocity != 0)
+			mPlayer.HorizontalCollisions(tile, mXVelocity);
+}
+
+void SpringApp::DoYCollisions()
+{
+	if (mPlayer.VerticalCollisions(mDanger, mYVelocity))
+	{
+		mGameState = GameState::LOSE;
+		mGameOverImage.SetY(0);
+	}
+	if (mPlayer.VerticalCollisions(mStar, mYVelocity))
+	{
+		mGameState = GameState::WIN;
+		mWinImage.SetY(0);
+	}
+	for (Entity& tile : gamelevel)
+		mPlayer.VerticalCollisions(tile, mYVelocity);
 }
