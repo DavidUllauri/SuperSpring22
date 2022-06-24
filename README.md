@@ -1,5 +1,5 @@
 # SuperSpring22
-Project for csci 39541 Game Engines
+Project for Game Engines class
 ![Game Preview](game_prev.jpg)
 # Unique to Project
 - Input handling uses array of bool
